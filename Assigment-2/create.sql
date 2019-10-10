@@ -1,4 +1,9 @@
 /*
+Create schema cs5200_fall2019_schuchert
+*/
+CREATE SCHEMA cs5200_fall2019_schuchert;
+USE cs5200_fall2019_schuchert;
+/*
 Person, User and Developer tables. 
 */
 CREATE TABLE person_generalization (
