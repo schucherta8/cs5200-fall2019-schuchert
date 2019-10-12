@@ -1,0 +1,6 @@
+LOGIN
+
+Hostname:cs5200-fall2019-schuchert.ckldewbxxzcn.us-east-1.rds.amazonaws.com
+User: aschuchert
+Password: database2019
+Port: 3306
