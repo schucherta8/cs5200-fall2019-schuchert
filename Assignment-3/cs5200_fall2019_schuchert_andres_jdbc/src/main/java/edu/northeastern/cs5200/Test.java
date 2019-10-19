@@ -10,6 +10,7 @@ import edu.northeastern.cs5200.model.Developer;
 import edu.northeastern.cs5200.model.Website;
 
 public class Test {
+	
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		DeveloperImpl devImpl = DeveloperImpl.getInstance();
@@ -78,5 +79,6 @@ public class Test {
 		for(Website website: websites) {
 			System.out.println("Name: " + website.getName());
 		}
+		System.out.println("End of Test.");
 	}
 }

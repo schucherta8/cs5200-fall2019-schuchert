@@ -2,6 +2,8 @@ package edu.northeastern.cs5200.dao;
 
 public class RoleImpl implements RoleDao {
 
+	private static final String ASSIGN_WEBSITE_ROLE = "";
+	
 	@Override
 	public void assignWebsiteRole(int developerId, int websiteId, int roleId) {
 		// TODO Auto-generated method stub

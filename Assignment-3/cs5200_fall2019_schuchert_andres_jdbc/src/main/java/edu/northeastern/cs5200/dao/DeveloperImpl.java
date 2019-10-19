@@ -21,15 +21,6 @@ public class DeveloperImpl implements DeveloperDao {
 	private static final String FIND_ALL_DEVELOPERS = "SELECT * FROM person_generalization "
 			+ "INNER JOIN developer_person_generalization "
 			+ "ON person_generalization.person_id = developer_person_generalization.developer_id";
-	/*
-	private static final String FIND_ALL_DEVELOPERS = "SELECT * FROM person_generalization "
-			+ "INNER JOIN developer_person_generalization "
-			+ "ON person_generealization.person_id = developer_person_generalization.developer_id"
-			+ "INNER JOIN `phone` "
-			+ "ON `phone`.person_id = person_generalization.person_id"
-			+ "INNER JOIN address "
-			+ "ON address.person_id = person_generalization.person_id";
-	*/
 	private static final String FIND_DEVELOPER_BY_ID = "SELECT * FROM person_generalization "
 			+ "INNER JOIN developer_person_generalization "
 			+ "WHERE person_generalization.person_id = developer_person_generalization.developer_id "

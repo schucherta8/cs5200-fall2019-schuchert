@@ -35,6 +35,7 @@ public class Widget {
 		url = null;
 		shareable = false;
 		expandable = false;
+		TYPE = WidgetType.HEADING;
 	}
 	
 	public Widget(int id, String name, Integer width, Integer height,

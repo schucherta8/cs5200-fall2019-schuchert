@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Website {
 	private int id;
+	private int developerId;
 	private String name;
 	private String description;
 	private Date created;
@@ -25,6 +26,12 @@ public class Website {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public int getDeveloperId() {
+		return developerId;
+	}
+	public void setDeveloperId(int developerId) {
+		this.developerId = developerId;
 	}
 	public String getName() {
 		return name;
