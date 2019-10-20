@@ -17,4 +17,5 @@ public class HtmlWidget extends Widget {
 	public String getHtml() {
 		return html;
 	}
+
 }

@@ -14,4 +14,28 @@ public class YouTubeWidget extends Widget {
         this.expandable = expandable;
         super.setType(WidgetType.YOUTUBE);
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public boolean isSharable() {
+        return sharable;
+    }
+
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setSharable(boolean sharable) {
+        this.sharable = sharable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
+    }
 }

@@ -49,7 +49,7 @@ public class WebsiteImpl implements WebsiteDao {
 			statement.setDate(6, website.getUpdated());
 			statement.setInt(7, website.getVisits());
 			statement.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class WebsiteImpl implements WebsiteDao {
 				Website website = new Website(id,name,description,created,updated,visits);
 				websites.add(website);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -105,7 +105,7 @@ public class WebsiteImpl implements WebsiteDao {
 				Website website = new Website(id,name,description,created,updated,visits);
 				websites.add(website);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -134,7 +134,7 @@ public class WebsiteImpl implements WebsiteDao {
 				website = new Website(websiteId,name,description,created,updated,visits);
 				website.setDeveloperId(developerId);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -146,22 +146,37 @@ public class WebsiteImpl implements WebsiteDao {
 	@Override
 	public int updateWebsite(int websiteId, Website website) {
 		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		try{
+			java.sql.Connection conn = Connection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(UPDATE_WEBSITE_BY_ID);
+			statement.setInt(7,websiteId);
+			statement.setInt(1,website.getDeveloperId());
+			statement.setString(2,website.getName());
+			statement.setString(3,website.getDescription());
+			statement.setDate(4,website.getCreated());
+			statement.setDate(5,website.getUpdated());
+			statement.setInt(6,website.getVisits());
+			statement.executeUpdate();
+			res = 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public int deleteWebsite(int websiteId) {
 		// TODO Auto-generated method stub
-		//Suppose I have a developer object that has a website object in its collection of websites. When I delete
-		//the website from SQL database, do I need to find a way to delete the website from the developer object?
-		//NEXT ASSIGNMENT
 		int res = -1;
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement person_statement = conn.prepareStatement(DELETE_WEBSITE_BY_ID);
 			person_statement.setInt(1, websiteId);
 			res = person_statement.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {

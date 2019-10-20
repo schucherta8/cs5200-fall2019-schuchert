@@ -39,7 +39,7 @@ public class UserImpl implements UserDao {
             create_user.setInt(1, user.getId());
             create_user.setBoolean(2, user.isUserAgreement());
             create_user.executeUpdate();
-            conn.close();
+            Connection.closeConnection();
         } catch(SQLException e) {
             e.printStackTrace();
         } catch(ClassNotFoundException e) {

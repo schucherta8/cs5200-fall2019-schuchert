@@ -7,7 +7,9 @@ import java.util.Collection;
 import edu.northeastern.cs5200.dao.DeveloperImpl;
 import edu.northeastern.cs5200.dao.WebsiteImpl;
 import edu.northeastern.cs5200.model.Developer;
+import edu.northeastern.cs5200.model.HeadingWidget;
 import edu.northeastern.cs5200.model.Website;
+import edu.northeastern.cs5200.model.Widget;
 
 public class Test {
 	
@@ -73,6 +75,7 @@ public class Test {
 		System.out.println("Developer DOB: " + dev.getDob().getMonth() + " " + dev.getDob().getDay() + 
 				" " + dev.getDob().getYear()+ "\n");
 		*/
+
 		WebsiteImpl websiteDao = WebsiteImpl.getInstance();
 		System.out.println("TESTING FIND WEBSITE FOR DEVELOPERS");
 		Collection<Website> websites = websiteDao.findWebsitesForDeveloper(25);

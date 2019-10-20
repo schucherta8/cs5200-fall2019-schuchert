@@ -19,7 +19,9 @@ public class PageImpl implements PageDao {
 	private static final String FIND_ALL_PAGES = "SELECT * FROM page";
 	private static final String FIND_PAGE_BY_ID = "SELECT * FROM page WHERE page.page_id = ?";
 	private static final String FIND_ALL_PAGES_FOR_WEBSITE = "SELECT * FROM page WHERE page.website_id = ?";
-	private static final String UPDATE_PAGE = "";
+	private static final String UPDATE_PAGE = "UPDATE page " +
+			"SET website_id = ?, title = ?, description = ?, created = ?, updated = ?, views = ? " +
+			"WHERE page.page_id = ?";
 	private static final String DELETE_PAGE = "DELETE FROM page WHERE page.page_id = ?";
 	
 	private static PageImpl instance = null;
@@ -48,7 +50,7 @@ public class PageImpl implements PageDao {
 			statement.setDate(5, page.getCreated());
 			statement.setDate(6, page.getUpdated());
 			statement.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -76,7 +78,7 @@ public class PageImpl implements PageDao {
 				page.setWebsiteId(websiteId);
 				pages.add(page);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -105,7 +107,7 @@ public class PageImpl implements PageDao {
 				page = new Page(pageId,title,description,created,updated,views);
 				page.setWebsiteId(websiteId);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -134,7 +136,7 @@ public class PageImpl implements PageDao {
 				page.setWebsiteId(websiteId);
 				pages.add(page);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -146,24 +148,45 @@ public class PageImpl implements PageDao {
 	@Override
 	public int updatePage(int pageId, Page page) {
 		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		try{
+			java.sql.Connection conn = Connection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(UPDATE_PAGE);
+			statement.setInt(1,page.getWebsiteId());
+			statement.setString(2,page.getTitle());
+			statement.setString(3,page.getDescription());
+			statement.setDate(4,page.getCreated());
+			statement.setDate(5,page.getUpdated());
+			statement.setInt(6,page.getViews());
+			statement.setInt(7,pageId);
+			statement.executeUpdate();
+			res = 0;
+			Connection.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	@Override
 	public int deletePage(int pageId) {
 		// TODO Auto-generated method stub
-		//DO I NEED TO DELETE PAGE FROM THE WEBSITE OBJECT LINKED TO THAT PAGE??
+		int res = -1;
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(DELETE_PAGE);
 			statement.setInt(1, pageId);
-			conn.close();
+			statement.executeUpdate();
+			res = 0;
+			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return res;
 	}
 
 }

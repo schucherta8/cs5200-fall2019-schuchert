@@ -9,10 +9,11 @@ public class HeadingWidget extends Widget{
 		this.size = size;
 		super.setType(WidgetType.HEADING);
 	}
-	
+
 	public void setSize(Integer size) {
 		this.size = size;
 	}
+
 	public Integer getSize() {
 		return size;
 	}

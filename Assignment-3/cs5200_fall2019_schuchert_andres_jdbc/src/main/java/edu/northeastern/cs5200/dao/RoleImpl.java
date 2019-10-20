@@ -71,7 +71,7 @@ public class RoleImpl implements RoleDao {
 					break;
 			}
 			statement.executeQuery();
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){
@@ -120,7 +120,7 @@ public class RoleImpl implements RoleDao {
 					break;
 			}
 			statement.executeQuery();
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){
@@ -166,7 +166,7 @@ public class RoleImpl implements RoleDao {
 			}
 			statement.executeQuery();
 			res = 0;
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){
@@ -213,7 +213,7 @@ public class RoleImpl implements RoleDao {
 			}
 			statement.executeQuery();
 			res = 0;
-			conn.close();
+			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){
