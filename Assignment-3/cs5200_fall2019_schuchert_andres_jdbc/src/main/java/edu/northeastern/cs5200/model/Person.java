@@ -62,11 +62,17 @@ public class Person {
 	public void removePhone(Phone phone) {
 		phones.remove(phone);
 	}
+	public void setPhones(List<Phone> phones){
+		this.phones = phones;
+	}
 	public void insertAddress(Address address) {
 		addresses.add(address);
 	}
 	public void removeAddress(Address address) {
 		addresses.remove(address);
+	}
+	public void setAddresses(List<Address> addresses){
+		this.addresses = addresses;
 	}
 	
 }

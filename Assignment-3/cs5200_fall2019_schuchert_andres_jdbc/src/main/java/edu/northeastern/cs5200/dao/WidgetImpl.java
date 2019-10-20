@@ -3,6 +3,7 @@ package edu.northeastern.cs5200.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import edu.northeastern.cs5200.Connection;
@@ -17,7 +18,7 @@ public class WidgetImpl implements WidgetDao {
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_HTML_WIDGET = "INSERT INTO widget_generalization "
 			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, html) "
-			+ "VALUES (?,?,?,?,?,?,?,?,?,?)";
+			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_IMAGE_WIDGET = "INSERT INTO widget_generalization "
 			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, image_src) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -139,7 +140,7 @@ public class WidgetImpl implements WidgetDao {
 			ResultSet res = statement.executeQuery();
 			while(res.next()) {
 				int id = res.getInt("widget_id");
-				int page_id = res.getInt("page_id");
+				int pageId = res.getInt("page_id");
 				String name = res.getString("name");
 				WidgetType type = WidgetType.valueOf(res.getString("d_type"));
 				String text = res.getString("text");
@@ -154,9 +155,10 @@ public class WidgetImpl implements WidgetDao {
 				String url = res.getString("youtube_url");
 				boolean sharable = res.getBoolean("youtube_sharable");
 				boolean expandable = res.getBoolean("youtube_expandable");
-				Widget widget = new Widget();
-				
-				
+				Widget widget = new Widget(id,name,width,height,cssStyle,cssClass,text,order,
+						size,html,src,url,sharable,expandable,type);
+				widget.setPageId(pageId);
+				widgets.add(widget);
 			}
 			conn.close();
 		} catch (SQLException e) {
@@ -164,37 +166,85 @@ public class WidgetImpl implements WidgetDao {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return widgets;
 	}
 
 	@Override
 	public Widget findWidgetById(int widgetId) {
 		// TODO Auto-generated method stub
+		Widget widget = null;
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_WIDGET_BY_ID);
+			ResultSet res = statement.executeQuery();
+			if(res.next()){
+				int id = res.getInt("widget_id");
+				int pageId = res.getInt("page_id");
+				String name = res.getString("name");
+				WidgetType type = WidgetType.valueOf(res.getString("d_type"));
+				String text = res.getString("text");
+				Integer order = res.getInt("order");
+				Integer width = res.getInt("width");
+				Integer height = res.getInt("height");
+				String cssClass = res.getString("css_class");
+				String cssStyle = res.getString("css_style");
+				Integer size = res.getInt("heading_size");
+				String html = res.getString("html");
+				String src = res.getString("image_src");
+				String url = res.getString("youtube_url");
+				boolean sharable = res.getBoolean("youtube_sharable");
+				boolean expandable = res.getBoolean("youtube_expandable");
+				widget = new Widget(id,name,width,height,cssStyle,cssClass,text,order,
+						size,html,src,url,sharable,expandable,type);
+				widget.setPageId(pageId);
+			}
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return widget;
 	}
 
 	@Override
 	public Collection<Widget> findWidgetsForPage(int pageId) {
 		// TODO Auto-generated method stub
+		Collection<Widget> widgets = new ArrayList<>();
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_WIDGETS_FOR_PAGE);
+			statement.setInt(1,pageId);
+			ResultSet res = statement.executeQuery();
+			while(res.next()) {
+				int id = res.getInt("widget_id");
+				pageId = res.getInt("page_id");
+				String name = res.getString("name");
+				WidgetType type = WidgetType.valueOf(res.getString("d_type"));
+				String text = res.getString("text");
+				Integer order = res.getInt("order");
+				Integer width = res.getInt("width");
+				Integer height = res.getInt("height");
+				String cssClass = res.getString("css_class");
+				String cssStyle = res.getString("css_style");
+				Integer size = res.getInt("heading_size");
+				String html = res.getString("html");
+				String src = res.getString("image_src");
+				String url = res.getString("youtube_url");
+				boolean sharable = res.getBoolean("youtube_sharable");
+				boolean expandable = res.getBoolean("youtube_expandable");
+				Widget widget = new Widget(id,name,width,height,cssStyle,cssClass,text,order,
+						size,html,src,url,sharable,expandable,type);
+				widget.setPageId(pageId);
+				widgets.add(widget);
+			}
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return widgets;
 	}
 
 	@Override
@@ -203,6 +253,7 @@ public class WidgetImpl implements WidgetDao {
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(UPDATE_WIDGET);
+
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -218,6 +269,7 @@ public class WidgetImpl implements WidgetDao {
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(DELETE_WIDGET);
+			statement.setInt(1,widgetId);
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

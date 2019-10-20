@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import edu.northeastern.cs5200.model.Website;
 
-public interface WebsiteDoa {
+public interface WebsiteDao {
 
 	void createWebsiteForDeveloper(int developerId, Website website);
 	

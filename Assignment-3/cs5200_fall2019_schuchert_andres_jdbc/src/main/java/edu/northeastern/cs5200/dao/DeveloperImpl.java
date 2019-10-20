@@ -76,7 +76,7 @@ public class DeveloperImpl implements DeveloperDao {
 			create_developer.setInt(1, developer.getId());
 			create_developer.setString(2, developer.getDeveloperKey());
 			create_developer.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,7 +118,7 @@ public class DeveloperImpl implements DeveloperDao {
 				*/
 				developers.add(developer);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -148,7 +148,7 @@ public class DeveloperImpl implements DeveloperDao {
 				Date dob = res.getDate("dob");
 				developer = new Developer(developerKey,developerId,firstName,lastName,username,password,email,dob);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -177,7 +177,7 @@ public class DeveloperImpl implements DeveloperDao {
 				Date dob = res.getDate("dob");
 				developer = new Developer(developerKey,developerId,firstName,lastName,username,password,email,dob);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -207,7 +207,7 @@ public class DeveloperImpl implements DeveloperDao {
 				Date dob = res.getDate("dob");
 				developer = new Developer(developerKey,developerId,firstName,lastName,username,password,email,dob);
 			}
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -236,7 +236,7 @@ public class DeveloperImpl implements DeveloperDao {
 			developer_statement.setString(1, developer.getDeveloperKey());
 			developer_statement.setInt(2, developer.getId());
 			res = developer_statement.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {
@@ -258,7 +258,7 @@ public class DeveloperImpl implements DeveloperDao {
 			PreparedStatement developer_statement = conn.prepareStatement(DELETE_DEVELOPER_BY_ID);
 			developer_statement.setInt(1, developerId);
 			res = person_statement.executeUpdate();
-			conn.close();
+			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
 		} catch(ClassNotFoundException e) {

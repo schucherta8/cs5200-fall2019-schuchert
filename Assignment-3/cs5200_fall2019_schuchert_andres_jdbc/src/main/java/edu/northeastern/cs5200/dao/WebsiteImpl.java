@@ -9,17 +9,18 @@ import java.util.Collection;
 
 import edu.northeastern.cs5200.Connection;
 import edu.northeastern.cs5200.model.Developer;
-import edu.northeastern.cs5200.model.Role;
 import edu.northeastern.cs5200.model.Website;
 
-public class WebsiteImpl implements WebsiteDoa{
+public class WebsiteImpl implements WebsiteDao {
 	private static final String CREATE_WEBSITE = "INSERT INTO website"
 			+ "(website_id,developer_id, name,description,created,updated,visits) "
 			+ "VALUES (?,?,?,?,?,?,?)";
 	private static final String FIND_ALL_WEBSITES = "SELECT * FROM website";
 	private static final String FIND_WEBSITES_BY_DEVELOPER = "SELECT * FROM website WHERE website.developer_id = ?";
 	private static final String FIND_WEBSITE_BY_ID = "SELECT * FROM website WHERE website.website_id = ?";
-	private static final String UPDATE_WEBSITE_BY_ID = "";
+	private static final String UPDATE_WEBSITE_BY_ID = "UPDATE website "
+			+ "SET developer_id = ?, name = ?, description = ?, created = ?, updated = ?, visits = ? "
+			+ "WHERE website.website_id = ?";
 	private static final String DELETE_WEBSITE_BY_ID = "DELETE FROM website WHERE website.website_id = ?";
 	private static WebsiteImpl instance = null;
 	
