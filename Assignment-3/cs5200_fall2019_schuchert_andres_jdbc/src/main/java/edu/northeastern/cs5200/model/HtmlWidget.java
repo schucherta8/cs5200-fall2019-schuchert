@@ -7,6 +7,7 @@ public class HtmlWidget extends Widget {
 			Integer order, String html) {
 		super(id, name, width, height, cssStyle, cssClass, text, order);
 		this.html = html;
+		super.setType(WidgetType.HTML);
 	}
 	
 	public void setHtml(String html) {

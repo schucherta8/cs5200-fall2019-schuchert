@@ -7,6 +7,7 @@ public class HeadingWidget extends Widget{
 			String text, Integer order, Integer size) {
 		super(id, name, width, height, cssStyle, cssClass, text, order);
 		this.size = size;
+		super.setType(WidgetType.HEADING);
 	}
 	
 	public void setSize(Integer size) {
