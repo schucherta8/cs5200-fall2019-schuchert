@@ -208,7 +208,61 @@ public class Test {
 				123434);
 		PageImpl pageDao = PageImpl.getInstance();
 		pageDao.updatePage(123,homeUpdate);
-		System.out.println("End of Test.");
+
+		WidgetImpl widgetDao = WidgetImpl.getInstance();
+		Widget head123 = new HeadingWidget(123,"head123",null,null,
+				null,null,"Welcome",0,2);
+		widgetDao.createWidgetForPage(123,head123);
+		Widget post234 = new HtmlWidget(234,"post234",null,null,
+				null,null,null,0,"<p>Lorem</p>");
+		widgetDao.createWidgetForPage(234,post234);
+
+		WidgetImpl widgetDao = WidgetImpl.getInstance();
+		Collection<Widget> widgets = widgetDao.findAllWidgets();
+		for(Widget widget : widgets){
+			System.out.println("Widget id: " + widget.getId());
+			System.out.println("Page id: " + widget.getPageId());
+			System.out.println("Type: " + widget.getType().name());
+			System.out.println("Name: " + widget.getName());
+			System.out.println("Width: " + widget.getWidth());
+			System.out.println("Height: " + widget.getHeight());
+			System.out.println("CSS Class: " + widget.getCssClass());
+			System.out.println("CSS Style: " + widget.getCssStyle());
+			System.out.println("Text: " + widget.getText());
+			System.out.println("Order: " + widget.getOrder());
+			System.out.println();
+		}
+		widgets = widgetDao.findWidgetsForPage(123);
+		for(Widget widget : widgets){
+			System.out.println("Widget id: " + widget.getId());
+			System.out.println("Page id: " + widget.getPageId());
+			System.out.println("Type: " + widget.getType().name());
+			System.out.println("Name: " + widget.getName());
+			System.out.println("Width: " + widget.getWidth());
+			System.out.println("Height: " + widget.getHeight());
+			System.out.println("CSS Class: " + widget.getCssClass());
+			System.out.println("CSS Style: " + widget.getCssStyle());
+			System.out.println("Text: " + widget.getText());
+			System.out.println("Order: " + widget.getOrder());
+			System.out.println();
+		}
+		Widget widget = widgetDao.findWidgetById(234);
+		System.out.println("Widget id: " + widget.getId());
+		System.out.println("Page id: " + widget.getPageId());
+		System.out.println("Type: " + widget.getType().name());
+		System.out.println("Name: " + widget.getName());
+		System.out.println("Width: " + widget.getWidth());
+		System.out.println("Height: " + widget.getHeight());
+		System.out.println("CSS Class: " + widget.getCssClass());
+		System.out.println("CSS Style: " + widget.getCssStyle());
+		System.out.println("Text: " + widget.getText());
+		System.out.println("Order: " + widget.getOrder());
+		System.out.println();
 		*/
+		WidgetImpl widgetDao = WidgetImpl.getInstance();
+		Widget head123Update = new HeadingWidget(123,"head123",null,null,
+				"halloween.css",null,"Spooky",0,5);
+		widgetDao.updateWidget(123,head123Update);
+		System.out.println("End of Test.");
 	}
 }

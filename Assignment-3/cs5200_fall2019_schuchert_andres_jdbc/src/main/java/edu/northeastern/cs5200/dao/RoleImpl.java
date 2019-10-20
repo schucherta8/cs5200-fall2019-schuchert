@@ -70,7 +70,7 @@ public class RoleImpl implements RoleDao {
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					break;
 			}
-			statement.executeQuery();
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -119,7 +119,7 @@ public class RoleImpl implements RoleDao {
 					priviledgeDao.assignPagePriviledge(developerId,pageId,Priviledge.READ.name());
 					break;
 			}
-			statement.executeQuery();
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e){
 			e.printStackTrace();
@@ -164,7 +164,7 @@ public class RoleImpl implements RoleDao {
 					priviledgeDao.deleteWebsitePriviledge(developerId,websiteId,Priviledge.READ.name());
 					break;
 			}
-			statement.executeQuery();
+			statement.executeUpdate();
 			res = 0;
 			Connection.closeConnection();
 		} catch (SQLException e){
@@ -211,7 +211,7 @@ public class RoleImpl implements RoleDao {
 					priviledgeDao.deletePagePriviledge(developerId,pageId,Priviledge.READ.name());
 					break;
 			}
-			statement.executeQuery();
+			statement.executeUpdate();
 			res = 0;
 			Connection.closeConnection();
 		} catch (SQLException e){

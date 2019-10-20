@@ -144,7 +144,8 @@ public class hw_jdbc_schuchert_andres {
         Widget post234 = new HtmlWidget(234,"post234",null,null,
                 null,null,null,0,"<p>Lorem</p>");
         widgetDao.createWidgetForPage(about.getId(),post234);
-        Widget head345 = new HeadingWidget(345,"head345",null,null,null,null,"Hi",1,2);
+        Widget head345 = new HeadingWidget(345,"head345",null,null,
+                null,null,"Hi",1,2);
         widgetDao.createWidgetForPage(contact.getId(),head345);
         Widget intro456 = new HtmlWidget(456,"intro456",null,null,
                 null,null,null,2,"<h1>Hi</h1>");
@@ -153,7 +154,8 @@ public class hw_jdbc_schuchert_andres {
                 null,null,null,3,"/img/567.png");
         widgetDao.createWidgetForPage(contact.getId(),image345);
         Widget video456 = new YouTubeWidget(678,"video456",400,300,
-                null,null,null,0,"https://youtu.be/h67VX51QXiQ",false,false);
+                null,null,null,0,"https://youtu.be/h67VX51QXiQ",
+                false,false);
         widgetDao.createWidgetForPage(preferences.getId(),video456);
     }
 }

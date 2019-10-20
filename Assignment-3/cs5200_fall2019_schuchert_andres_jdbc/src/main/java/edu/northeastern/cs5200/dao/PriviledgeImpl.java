@@ -38,7 +38,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(1,developerId);
 			statement.setInt(2,websiteId);
 			statement.setString(3,priviledge);
-			statement.executeQuery();
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(1,developerId);
 			statement.setInt(2,pageId);
 			statement.setString(3,priviledge);
-			statement.executeQuery();
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,6 +73,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(1,developerId);
 			statement.setInt(2,websiteId);
 			statement.setString(3,priviledge);
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -89,6 +90,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(1,developerId);
 			statement.setInt(2,pageId);
 			statement.setString(3,priviledge);
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();

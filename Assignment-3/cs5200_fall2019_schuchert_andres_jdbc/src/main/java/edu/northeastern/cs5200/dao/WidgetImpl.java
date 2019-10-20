@@ -3,8 +3,10 @@ package edu.northeastern.cs5200.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import edu.northeastern.cs5200.Connection;
 
@@ -32,20 +34,20 @@ public class WidgetImpl implements WidgetDao {
 	private static final String FIND_WIDGETS_FOR_PAGE = "SELECT * FROM widget_generalization "
 			+ "WHERE widget_generalization.page_id = ?";
 	private static final String UPDATE_HEADING_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, heading_size = ? " +
+			"SET d_type = ?, `name` = ?, `text` = ?,`order` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?,  heading_size = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_HTML_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, html = ? " +
+			"SET d_type = ?, `name` = ?, `text` = ?, `order` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?,  html = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_IMAGE_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, image_src = ? " +
+			"SET d_type = ?, `name` = ?, `text` = ?, `order` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, image_src = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_YOUTUBE_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, `text` = ?, `order` = ?," +
+			"SET d_type = ?, `name` = ?, `text` = ?, `order` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, " +
 			" youtube_url = ?, youtube_sharable = ?, youtube_expandable = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 
@@ -66,10 +68,11 @@ public class WidgetImpl implements WidgetDao {
 	public void createWidgetForPage(int pageId, Widget widget) {
 		// TODO Auto-generated method stub
 		try {
-			java.sql.Connection conn = Connection.getConnection();
-			PreparedStatement statement = null;
+
 			PageImpl pagedao = PageImpl.getInstance();
 			Page page = pagedao.findPageById(pageId);
+			java.sql.Connection conn = Connection.getConnection();
+			PreparedStatement statement = null;
 			switch(widget.getType()) {
 			case HEADING:
 				if(widget instanceof HeadingWidget){
@@ -78,13 +81,13 @@ public class WidgetImpl implements WidgetDao {
 					statement.setString(2, widget.getName());
 					statement.setString(3, widget.getType().name());
 					statement.setString(4,widget.getText());
-					statement.setInt(5, widget.getOrder());
-					statement.setInt(6, widget.getWidth());
-					statement.setInt(7, widget.getHeight());
+					statement.setObject(5, widget.getOrder(),Types.INTEGER);
+					statement.setObject(6, widget.getWidth(),Types.INTEGER);
+					statement.setObject(7, widget.getHeight(), Types.INTEGER);
 					statement.setString(8, widget.getCssClass());
 					statement.setString(9, widget.getCssStyle());
 					statement.setInt(10	, pageId);
-					statement.setInt(11, ((HeadingWidget)widget).getSize());
+					statement.setObject(11, ((HeadingWidget)widget).getSize(),Types.INTEGER);
 					page.insertWidget(widget);
 					statement.executeUpdate();
 				}
@@ -96,9 +99,9 @@ public class WidgetImpl implements WidgetDao {
 					statement.setString(2, widget.getName());
 					statement.setString(3, widget.getType().name());
 					statement.setString(4,widget.getText());
-					statement.setInt(5, widget.getOrder());
-					statement.setInt(6, widget.getWidth());
-					statement.setInt(7, widget.getHeight());
+					statement.setObject(5, widget.getOrder(),Types.INTEGER);
+					statement.setObject(6, widget.getWidth(),Types.INTEGER);
+					statement.setObject(7, widget.getHeight(),Types.INTEGER);
 					statement.setString(8, widget.getCssClass());
 					statement.setString(9, widget.getCssStyle());
 					statement.setInt(10	, pageId);
@@ -114,9 +117,9 @@ public class WidgetImpl implements WidgetDao {
 					statement.setString(2, widget.getName());
 					statement.setString(3, widget.getType().name());
 					statement.setString(4,widget.getText());
-					statement.setInt(5, widget.getOrder());
-					statement.setInt(6, widget.getWidth());
-					statement.setInt(7, widget.getHeight());
+					statement.setObject(5, widget.getOrder(),Types.INTEGER);
+					statement.setObject(6, widget.getWidth(),Types.INTEGER);
+					statement.setObject(7, widget.getHeight(),Types.INTEGER);
 					statement.setString(8, widget.getCssClass());
 					statement.setString(9, widget.getCssStyle());
 					statement.setInt(10	, pageId);
@@ -132,9 +135,9 @@ public class WidgetImpl implements WidgetDao {
 					statement.setString(2, widget.getName());
 					statement.setString(3, widget.getType().name());
 					statement.setString(4,widget.getText());
-					statement.setInt(5, widget.getOrder());
-					statement.setInt(6, widget.getWidth());
-					statement.setInt(7, widget.getHeight());
+					statement.setObject(5, widget.getOrder(),Types.INTEGER);
+					statement.setObject(6, widget.getWidth(),Types.INTEGER);
+					statement.setObject(7, widget.getHeight(),Types.INTEGER);
 					statement.setString(8, widget.getCssClass());
 					statement.setString(9, widget.getCssStyle());
 					statement.setInt(10	, pageId);
@@ -159,7 +162,7 @@ public class WidgetImpl implements WidgetDao {
 	@Override
 	public Collection<Widget> findAllWidgets() {
 		// TODO Auto-generated method stub
-		Collection<Widget> widgets = null;
+		Collection<Widget> widgets = new LinkedList<>();
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_ALL_WIDGETS);
@@ -219,6 +222,7 @@ public class WidgetImpl implements WidgetDao {
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_WIDGET_BY_ID);
+			statement.setInt(1,widgetId);
 			ResultSet res = statement.executeQuery();
 			if(res.next()){
 				int id = res.getInt("widget_id");
@@ -266,7 +270,7 @@ public class WidgetImpl implements WidgetDao {
 	@Override
 	public Collection<Widget> findWidgetsForPage(int pageId) {
 		// TODO Auto-generated method stub
-		Collection<Widget> widgets = new ArrayList<>();
+		Collection<Widget> widgets = new LinkedList<>();
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_WIDGETS_FOR_PAGE);
@@ -332,16 +336,15 @@ public class WidgetImpl implements WidgetDao {
 					if(widget instanceof HeadingWidget){
 						statement = conn.prepareStatement(UPDATE_HEADING_WIDGET);
 						statement.setString(1, widget.getType().name());
-						statement.setInt(2	, widget.getPageId());
-						statement.setString(3, widget.getName());
-						statement.setString(4,widget.getText());
-						statement.setInt(5, widget.getOrder());
-						statement.setInt(6, widget.getWidth());
-						statement.setInt(7, widget.getHeight());
-						statement.setString(8, widget.getCssClass());
-						statement.setString(9, widget.getCssStyle());
-						statement.setInt(10, ((HeadingWidget)widget).getSize());
-						statement.setInt(11,widgetId);
+						statement.setString(2, widget.getName());
+						statement.setString(3,widget.getText());
+						statement.setObject(4, widget.getOrder(),Types.INTEGER);
+						statement.setObject(5, widget.getWidth(),Types.INTEGER);
+						statement.setObject(6, widget.getHeight(),Types.INTEGER);
+						statement.setString(7, widget.getCssClass());
+						statement.setString(8, widget.getCssStyle());
+						statement.setObject(9, ((HeadingWidget)widget).getSize(),Types.INTEGER);
+						statement.setInt(10,widgetId);
 						statement.executeUpdate();
 						res = 0;
 					}
@@ -350,16 +353,15 @@ public class WidgetImpl implements WidgetDao {
 					if(widget instanceof HtmlWidget){
 						statement = conn.prepareStatement(UPDATE_HTML_WIDGET);
 						statement.setString(1, widget.getType().name());
-						statement.setInt(2, widget.getPageId());
-						statement.setString(3, widget.getName());
-						statement.setString(4,widget.getText());
-						statement.setInt(5, widget.getOrder());
-						statement.setInt(6, widget.getWidth());
-						statement.setInt(7, widget.getHeight());
-						statement.setString(8, widget.getCssClass());
-						statement.setString(9, widget.getCssStyle());
-						statement.setString(10, ((HtmlWidget)widget).getHtml());
-						statement.setInt(11,widgetId);
+						statement.setString(2, widget.getName());
+						statement.setString(3,widget.getText());
+						statement.setObject(4, widget.getOrder(),Types.INTEGER);
+						statement.setObject(5, widget.getWidth(),Types.INTEGER);
+						statement.setObject(6, widget.getHeight(),Types.INTEGER);
+						statement.setString(7, widget.getCssClass());
+						statement.setString(8, widget.getCssStyle());
+						statement.setString(9, ((HtmlWidget)widget).getHtml());
+						statement.setInt(10,widgetId);
 						statement.executeUpdate();
 						res = 0;
 					}
@@ -368,16 +370,15 @@ public class WidgetImpl implements WidgetDao {
 					if(widget instanceof ImageWidget){
 						statement = conn.prepareStatement(UPDATE_IMAGE_WIDGET);
 						statement.setString(1, widget.getType().name());
-						statement.setInt(2, widget.getPageId());
-						statement.setString(3, widget.getName());
-						statement.setString(4,widget.getText());
-						statement.setInt(5, widget.getOrder());
-						statement.setInt(6, widget.getWidth());
-						statement.setInt(7, widget.getHeight());
-						statement.setString(8, widget.getCssClass());
-						statement.setString(9, widget.getCssStyle());
-						statement.setString(10, ((ImageWidget)widget).getSrc());
-						statement.setInt(11,widgetId);
+						statement.setString(2, widget.getName());
+						statement.setString(3,widget.getText());
+						statement.setObject(4, widget.getOrder(),Types.INTEGER);
+						statement.setObject(5, widget.getWidth(),Types.INTEGER);
+						statement.setObject(6, widget.getHeight(),Types.INTEGER);
+						statement.setString(7, widget.getCssClass());
+						statement.setString(8, widget.getCssStyle());
+						statement.setString(9, ((ImageWidget)widget).getSrc());
+						statement.setInt(10,widgetId);
 						statement.executeUpdate();
 						res = 0;
 					}
@@ -386,18 +387,17 @@ public class WidgetImpl implements WidgetDao {
 					if(widget instanceof YouTubeWidget){
 						statement = conn.prepareStatement(UPDATE_YOUTUBE_WIDGET);
 						statement.setString(1, widget.getType().name());
-						statement.setInt(2	, widget.getPageId());
-						statement.setString(3, widget.getName());
-						statement.setString(4,widget.getText());
-						statement.setInt(5, widget.getOrder());
-						statement.setInt(6, widget.getWidth());
-						statement.setInt(7, widget.getHeight());
-						statement.setString(8, widget.getCssClass());
-						statement.setString(9, widget.getCssStyle());
-						statement.setString(10, ((YouTubeWidget)widget).getUrl());
-						statement.setBoolean(11, ((YouTubeWidget)widget).isSharable());
-						statement.setBoolean(12, ((YouTubeWidget)widget).isExpandable());
-						statement.setInt(13,widgetId);
+						statement.setString(2, widget.getName());
+						statement.setString(3,widget.getText());
+						statement.setObject(4, widget.getOrder(),Types.INTEGER);
+						statement.setObject(5, widget.getWidth(),Types.INTEGER);
+						statement.setObject(6, widget.getHeight(),Types.INTEGER);
+						statement.setString(7, widget.getCssClass());
+						statement.setString(8, widget.getCssStyle());
+						statement.setString(9, ((YouTubeWidget)widget).getUrl());
+						statement.setBoolean(10, ((YouTubeWidget)widget).isSharable());
+						statement.setBoolean(11, ((YouTubeWidget)widget).isExpandable());
+						statement.setInt(12,widgetId);
 						statement.executeUpdate();
 						res = 0;
 					}
