@@ -3,7 +3,9 @@ package edu.northeastern.cs5200.dao;
 import edu.northeastern.cs5200.model.Phone;
 
 public interface PhoneDao {
-    void createPhoneForDeveloper(int developerId, Phone phone);
+    void createPhone(Phone phone);
 
-    Phone findPhoneByDeveloper(int developerId);
+    Phone findPhoneByCredentials(String phone, boolean primary);
+
+    int updatePhone(int personId, Phone phone);
 }

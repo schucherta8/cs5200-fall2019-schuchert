@@ -1,6 +1,7 @@
 package edu.northeastern.cs5200.model;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 public class Person {
@@ -11,8 +12,8 @@ public class Person {
 	private String password;
 	private String email;
 	private Date dob;
-	private List<Phone> phones;
-	private List<Address> addresses;
+	private Collection<Phone> phones;
+	private Collection<Address> addresses;
 	
 	public int getId() {
 		return id;
@@ -65,6 +66,9 @@ public class Person {
 	public void setPhones(List<Phone> phones){
 		this.phones = phones;
 	}
+	public Collection<Phone> getPhones(){
+		return phones;
+	}
 	public void insertAddress(Address address) {
 		addresses.add(address);
 	}
@@ -73,6 +77,9 @@ public class Person {
 	}
 	public void setAddresses(List<Address> addresses){
 		this.addresses = addresses;
+	}
+	public Collection<Address> getAddresses(){
+		return addresses;
 	}
 	
 }

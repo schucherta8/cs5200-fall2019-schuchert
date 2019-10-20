@@ -1,6 +1,8 @@
 package edu.northeastern.cs5200.model;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Website {
@@ -11,7 +13,7 @@ public class Website {
 	private Date created;
 	private Date updated;
 	private Integer visits;
-	List<Page> pages;
+	Collection<Page> pages;
 	
 	public Website(int id, String name, String description, Date created, Date updated, Integer visits) {
 		this.id = id;
@@ -20,6 +22,7 @@ public class Website {
 		this.created = created;
 		this.updated = updated;
 		this.visits = visits;
+		pages = new LinkedList<>();
 	}
 	public int getId() {
 		return id;

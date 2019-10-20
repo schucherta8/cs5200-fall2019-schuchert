@@ -13,13 +13,13 @@ import edu.northeastern.cs5200.model.Website;
 
 public class WebsiteImpl implements WebsiteDao {
 	private static final String CREATE_WEBSITE = "INSERT INTO website"
-			+ "(website_id,developer_id, name,description,created,updated,visits) "
+			+ "(website_id,developer_id, `name`,description,created,updated,visits) "
 			+ "VALUES (?,?,?,?,?,?,?)";
 	private static final String FIND_ALL_WEBSITES = "SELECT * FROM website";
 	private static final String FIND_WEBSITES_BY_DEVELOPER = "SELECT * FROM website WHERE website.developer_id = ?";
 	private static final String FIND_WEBSITE_BY_ID = "SELECT * FROM website WHERE website.website_id = ?";
 	private static final String UPDATE_WEBSITE_BY_ID = "UPDATE website "
-			+ "SET developer_id = ?, name = ?, description = ?, created = ?, updated = ?, visits = ? "
+			+ "SET `name` = ?, description = ?, created = ?, updated = ?, visits = ? "
 			+ "WHERE website.website_id = ?";
 	private static final String DELETE_WEBSITE_BY_ID = "DELETE FROM website WHERE website.website_id = ?";
 	private static WebsiteImpl instance = null;
@@ -68,12 +68,14 @@ public class WebsiteImpl implements WebsiteDao {
 			ResultSet res = statement.executeQuery();
 			while(res.next()) {
 				int id = res.getInt("website_id");
+				int developerId = res.getInt("developer_id");
 				String name = res.getString("name");
 				String description = res.getString("description");
 				Date created = res.getDate("created");
 				Date updated = res.getDate("updated");
 				Integer visits = res.getInt("visits");
 				Website website = new Website(id,name,description,created,updated,visits);
+				website.setDeveloperId(developerId);
 				websites.add(website);
 			}
 			Connection.closeConnection();
@@ -103,6 +105,7 @@ public class WebsiteImpl implements WebsiteDao {
 				Date updated = res.getDate("updated");
 				Integer visits = res.getInt("visits");
 				Website website = new Website(id,name,description,created,updated,visits);
+				website.setDeveloperId(developerId);
 				websites.add(website);
 			}
 			Connection.closeConnection();
@@ -150,14 +153,14 @@ public class WebsiteImpl implements WebsiteDao {
 		try{
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(UPDATE_WEBSITE_BY_ID);
-			statement.setInt(7,websiteId);
-			statement.setInt(1,website.getDeveloperId());
-			statement.setString(2,website.getName());
-			statement.setString(3,website.getDescription());
-			statement.setDate(4,website.getCreated());
-			statement.setDate(5,website.getUpdated());
-			statement.setInt(6,website.getVisits());
+			statement.setString(1,website.getName());
+			statement.setString(2,website.getDescription());
+			statement.setDate(3,website.getCreated());
+			statement.setDate(4,website.getUpdated());
+			statement.setInt(5,website.getVisits());
+			statement.setInt(6,websiteId);
 			statement.executeUpdate();
+			Connection.closeConnection();
 			res = 0;
 		} catch (SQLException e) {
 			e.printStackTrace();

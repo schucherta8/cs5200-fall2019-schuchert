@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import edu.northeastern.cs5200.Connection;
+import edu.northeastern.cs5200.model.Address;
 import edu.northeastern.cs5200.model.Developer;
 import edu.northeastern.cs5200.model.Phone;
 
@@ -39,11 +41,10 @@ public class DeveloperImpl implements DeveloperDao {
 			+ "WHERE person_generalization.person_id = ?";
 	private static final String UPDATE_DEVELOPER_BY_ID = "UPDATE developer_person_generalization "
 			+ "SET developer_key = ? "
-			+ "WHERE developer_generalization.developer_id = ?";
-	private static final String DELETE_PERSON_BY_ID = "DELETE FROM person_generalization "
-			+ "WHERE person_generalization.person_id = ?";
-	private static final String DELETE_DEVELOPER_BY_ID = "DELETE FROM developer_person_generalization "
 			+ "WHERE developer_person_generalization.developer_id = ?";
+
+	private static final String DELETE_DEVELOPER_BY_ID = "DELETE FROM developer_person_generalization "
+			+ "WHERE developer_person_generalization.developer_id = ?";//Based on @371
 	
 	private static DeveloperImpl instance = null;
 	
@@ -76,6 +77,22 @@ public class DeveloperImpl implements DeveloperDao {
 			create_developer.setInt(1, developer.getId());
 			create_developer.setString(2, developer.getDeveloperKey());
 			create_developer.executeUpdate();
+			Collection<Phone> phones = developer.getPhones();
+			PhoneImpl phoneDao = PhoneImpl.getInstance();
+			if(phones != null){
+				for(Phone phone: phones){
+					phone.setPersonId(developer.getId());
+					phoneDao.createPhone(phone);
+				}
+			}
+			Collection<Address> addresses = developer.getAddresses();
+			AddressImpl addressDao = AddressImpl.getInstance();
+			if(addresses != null){
+				for(Address address: addresses){
+					address.setPersonId(developer.getId());
+					addressDao.createAddress(address);
+				}
+			}
 			Connection.closeConnection();
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,19 +120,8 @@ public class DeveloperImpl implements DeveloperDao {
 				String password = res.getString("password");
 				String email = res.getString("email");
 				Date dob = res.getDate("dob");
-				/*
-				String phone = res.getString("phone");
-				boolean primary = res.getBoolean("`primary`");
-				Phone devPhone = new Phone(phone,primary,developerId);
-				String street1 = res.getString("street1");
-				String street2 = res.getString("street2");
-				*/
 				Developer developer = new Developer(developerKey,developerId,
 						firstName,lastName,username,password,email,dob);
-				/*
-				developer.insertPhone(devPhone);
-				developer.insertAddress(devAddress);
-				*/
 				developers.add(developer);
 			}
 			Connection.closeConnection();
@@ -236,6 +242,7 @@ public class DeveloperImpl implements DeveloperDao {
 			developer_statement.setString(1, developer.getDeveloperKey());
 			developer_statement.setInt(2, developer.getId());
 			res = developer_statement.executeUpdate();
+
 			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -251,13 +258,9 @@ public class DeveloperImpl implements DeveloperDao {
 		int res = -1;
 		try {
 			java.sql.Connection conn = Connection.getConnection();
-			PreparedStatement person_statement = conn.prepareStatement(DELETE_PERSON_BY_ID);
-			person_statement.setInt(1, developerId);
-			res = person_statement.executeUpdate();
-			
 			PreparedStatement developer_statement = conn.prepareStatement(DELETE_DEVELOPER_BY_ID);
 			developer_statement.setInt(1, developerId);
-			res = person_statement.executeUpdate();
+			res = developer_statement.executeUpdate();
 			Connection.closeConnection();
 		} catch(SQLException e) {
 			e.printStackTrace();

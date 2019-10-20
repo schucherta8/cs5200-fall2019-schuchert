@@ -2,13 +2,17 @@ package edu.northeastern.cs5200.model;
 
 public class Phone {
 	private String phone;
-	private boolean primary;
+	private Boolean primary;
 	private int personId;
-	
-	public Phone(String phone, boolean primary, int personId) {
+
+	public Phone(String phone, boolean primary){
 		this.phone = phone;
 		this.primary = primary;
+	}
+	public Phone(int personId, String phone, boolean primary) {
 		this.personId = personId;
+		this.phone = phone;
+		this.primary = primary;
 	}
 
 	public String getPhone() {
@@ -19,7 +23,7 @@ public class Phone {
 		this.phone = phone;
 	}
 
-	public boolean isPrimary() {
+	public Boolean isPrimary() {
 		return primary;
 	}
 

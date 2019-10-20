@@ -2,7 +2,14 @@ package edu.northeastern.cs5200.model;
 
 public class HeadingWidget extends Widget{
 	private Integer size;
-	
+
+	public HeadingWidget(int id, String name, Integer width, Integer height, String cssStyle, String cssClass,
+						 String text, Integer order) {
+		super(id, name, width, height, cssStyle, cssClass, text, order);
+		size = 2;
+		super.setType(WidgetType.HEADING);
+	}
+
 	public HeadingWidget(int id, String name, Integer width, Integer height, String cssStyle, String cssClass,
 			String text, Integer order, Integer size) {
 		super(id, name, width, height, cssStyle, cssClass, text, order);

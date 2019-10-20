@@ -13,16 +13,16 @@ import edu.northeastern.cs5200.model.*;
 public class WidgetImpl implements WidgetDao {
 
 	private static final String CREATE_HEADING_WIDGET = "INSERT INTO widget_generalization "
-			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, heading_size) "
+			+ "(widget_id, `name`, d_type, `text`, `order`, width, height, css_class, css_style, page_id, heading_size) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_HTML_WIDGET = "INSERT INTO widget_generalization "
-			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, html) "
+			+ "(widget_id, `name`, d_type, `text`, `order`, width, height, css_class, css_style, page_id, html) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_IMAGE_WIDGET = "INSERT INTO widget_generalization "
-			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, image_src) "
+			+ "(widget_id, `name`, d_type, `text`, `order`, width, height, css_class, css_style, page_id, image_src) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_YOUTUBE_WIDGET = "INSERT INTO widget_generalization "
-			+ "(widget_id, name, d_type, text, order, width, height, css_class, css_style, page_id, "
+			+ "(widget_id, `name`, d_type, `text`, `order`, width, height, css_class, css_style, page_id, "
 			+ "youtube_url, youtube_shareable, youtube_expandable) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
@@ -32,20 +32,20 @@ public class WidgetImpl implements WidgetDao {
 	private static final String FIND_WIDGETS_FOR_PAGE = "SELECT * FROM widget_generalization "
 			+ "WHERE widget_generalization.page_id = ?";
 	private static final String UPDATE_HEADING_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, name = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, text = ?, order = ?, heading_size = ? " +
+			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, heading_size = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_HTML_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, name = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, text = ?, order = ?, html = ? " +
+			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, html = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_IMAGE_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, name = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, text = ?, order = ?, image_src = ? " +
+			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, `text` = ?, `order` = ?, image_src = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 	private static final String UPDATE_YOUTUBE_WIDGET = "UPDATE widget_generalization " +
-			"SET d_type = ?, page_id = ?, name = ?, width = ?, height = ?," +
-			" css_class = ?, css_style = ?, text = ?, order = ?," +
+			"SET d_type = ?, page_id = ?, `name` = ?, width = ?, height = ?," +
+			" css_class = ?, css_style = ?, `text` = ?, `order` = ?," +
 			" youtube_url = ?, youtube_sharable = ?, youtube_expandable = ? " +
 			"WHERE widget_generalization.widget_id = ?";
 
@@ -421,6 +421,7 @@ public class WidgetImpl implements WidgetDao {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(DELETE_WIDGET);
 			statement.setInt(1,widgetId);
+			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();

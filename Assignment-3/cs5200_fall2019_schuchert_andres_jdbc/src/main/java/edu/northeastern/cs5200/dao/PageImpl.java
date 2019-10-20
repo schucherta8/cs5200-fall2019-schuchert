@@ -13,16 +13,16 @@ import edu.northeastern.cs5200.model.Website;
 
 public class PageImpl implements PageDao {
 
-	private static final String CREATE_PAGE_FOR_WEBSITE =  "INSERT INTO page "
+	private static final String CREATE_PAGE_FOR_WEBSITE =  "INSERT INTO `page` "
 			+ "(page_id,website_id,title,description,created,updated,views) "
 			+ "VALUES (?,?,?,?,?,?,?)";
-	private static final String FIND_ALL_PAGES = "SELECT * FROM page";
-	private static final String FIND_PAGE_BY_ID = "SELECT * FROM page WHERE page.page_id = ?";
-	private static final String FIND_ALL_PAGES_FOR_WEBSITE = "SELECT * FROM page WHERE page.website_id = ?";
-	private static final String UPDATE_PAGE = "UPDATE page " +
-			"SET website_id = ?, title = ?, description = ?, created = ?, updated = ?, views = ? " +
-			"WHERE page.page_id = ?";
-	private static final String DELETE_PAGE = "DELETE FROM page WHERE page.page_id = ?";
+	private static final String FIND_ALL_PAGES = "SELECT * FROM `page`";
+	private static final String FIND_PAGE_BY_ID = "SELECT * FROM `page` WHERE `page`.page_id = ?";
+	private static final String FIND_ALL_PAGES_FOR_WEBSITE = "SELECT * FROM `page` WHERE `page`.website_id = ?";
+	private static final String UPDATE_PAGE = "UPDATE `page` " +
+			"SET title = ?, description = ?, created = ?, updated = ?, views = ? " +
+			"WHERE `page`.page_id = ?";
+	private static final String DELETE_PAGE = "DELETE FROM `page` WHERE `page`.page_id = ?";
 	
 	private static PageImpl instance = null;
 	
@@ -38,17 +38,18 @@ public class PageImpl implements PageDao {
 	public void createPageForWebsite(int websiteId, Page page) {
 		// TODO Auto-generated method stub
 		try {
-			java.sql.Connection conn = Connection.getConnection();
-			PreparedStatement statement = conn.prepareStatement(CREATE_PAGE_FOR_WEBSITE);
 			WebsiteImpl websiteDao = WebsiteImpl.getInstance();
 			Website website = websiteDao.findWebsiteById(websiteId);
 			website.insertPage(page);
+			java.sql.Connection conn = Connection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(CREATE_PAGE_FOR_WEBSITE);
 			statement.setInt(1, page.getId());
 			statement.setInt(2, websiteId);
 			statement.setString(3,page.getTitle());
 			statement.setString(4, page.getDescription());
 			statement.setDate(5, page.getCreated());
 			statement.setDate(6, page.getUpdated());
+			statement.setInt(7,page.getViews());
 			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
@@ -123,6 +124,7 @@ public class PageImpl implements PageDao {
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_ALL_PAGES_FOR_WEBSITE);
+			statement.setInt(1,websiteId);
 			ResultSet res = statement.executeQuery();
 			while(res.next()) {
 				int id = res.getInt("page_id");
@@ -152,13 +154,12 @@ public class PageImpl implements PageDao {
 		try{
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(UPDATE_PAGE);
-			statement.setInt(1,page.getWebsiteId());
-			statement.setString(2,page.getTitle());
-			statement.setString(3,page.getDescription());
-			statement.setDate(4,page.getCreated());
-			statement.setDate(5,page.getUpdated());
-			statement.setInt(6,page.getViews());
-			statement.setInt(7,pageId);
+			statement.setString(1,page.getTitle());
+			statement.setString(2,page.getDescription());
+			statement.setDate(3,page.getCreated());
+			statement.setDate(4,page.getUpdated());
+			statement.setInt(5,page.getViews());
+			statement.setInt(6,pageId);
 			statement.executeUpdate();
 			res = 0;
 			Connection.closeConnection();

@@ -4,6 +4,7 @@ import edu.northeastern.cs5200.dao.PhoneDao;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Developer extends Person {
@@ -20,9 +21,11 @@ public class Developer extends Person {
 		super.setEmail("throwaway@mail.com");
 		super.setDob(new Date(2019,1,1));
 		this.developerKey = developerKey;
+		websites = new LinkedList<>();
 	}
 	public Developer(String developerKey, int id, String firstname,
 					 String lastname, String username, String password, String email, Date dob) {
+
 		super.setId(id);
 		super.setFirstName(firstname);
 		super.setLastName(lastname);
@@ -31,6 +34,7 @@ public class Developer extends Person {
 		super.setEmail(email);
 		super.setDob(dob);
 		this.developerKey = developerKey;
+		websites = new LinkedList<>();
 	}
 	public Developer(String developerKey, int id, String firstname,
 					 String lastname, String username, String password,
@@ -42,6 +46,10 @@ public class Developer extends Person {
 		super.setPassword(password);
 		super.setEmail(email);
 		super.setDob(dob);
+		super.setPhones(phones);
+		super.setAddresses(addresses);
+		this.developerKey = developerKey;
+		websites = new LinkedList<>();
 	}
 	public int getId() {
 		return super.getId();
