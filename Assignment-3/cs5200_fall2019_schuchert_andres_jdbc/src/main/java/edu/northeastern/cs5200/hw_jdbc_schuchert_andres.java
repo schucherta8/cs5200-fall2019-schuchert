@@ -1,6 +1,7 @@
 package edu.northeastern.cs5200;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import edu.northeastern.cs5200.dao.*;
 import edu.northeastern.cs5200.model.*;
@@ -210,13 +211,12 @@ public class hw_jdbc_schuchert_andres {
         //Delete 2
         Collection<Widget> widgets = widgetDao.findWidgetsForPage(contact.getId());
         Widget maxWidget = null;
-        Widget widget;
-        int max = 0;
-        while(widgets.iterator().hasNext()){
-            widget = widgets.iterator().next();
-            if(widget.getOrder() > max){
+        //Widget widget;
+        int maxOrder = -1;
+        for(Widget widget : widgets){
+            if(widget.getOrder() > maxOrder){
+                maxOrder = widget.getOrder();
                 maxWidget = widget;
-                max = maxWidget.getOrder();
             }
         }
         widgetDao.deleteWidget(maxWidget.getId());
@@ -224,5 +224,6 @@ public class hw_jdbc_schuchert_andres {
 
         //Delete 4
         websiteDao.deleteWebsite(cnet.getId());
+        System.out.println("End of Deletes");
     }
 }
