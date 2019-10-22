@@ -2,12 +2,12 @@ package edu.northeastern.cs5200.model;
 
 public class YouTubeWidget extends Widget {
     private String url;
-    private boolean sharable;
-    private boolean expandable;
+    private Boolean sharable;
+    private Boolean expandable;
 
     public YouTubeWidget(int id, String name, Integer width, Integer height,
                          String cssStyle, String cssClass, String text, Integer order,
-                         String url, boolean sharable, boolean expandable) {
+                         String url, Boolean sharable, Boolean expandable) {
         super(id, name, width, height, cssStyle, cssClass, text, order);
         this.url = url;
         this.sharable = sharable;
@@ -19,11 +19,11 @@ public class YouTubeWidget extends Widget {
         return url;
     }
 
-    public boolean isSharable() {
+    public Boolean isSharable() {
         return sharable;
     }
 
-    public boolean isExpandable() {
+    public Boolean isExpandable() {
         return expandable;
     }
 
@@ -31,11 +31,11 @@ public class YouTubeWidget extends Widget {
         this.url = url;
     }
 
-    public void setSharable(boolean sharable) {
+    public void setSharable(Boolean sharable) {
         this.sharable = sharable;
     }
 
-    public void setExpandable(boolean expandable) {
+    public void setExpandable(Boolean expandable) {
         this.expandable = expandable;
     }
 }

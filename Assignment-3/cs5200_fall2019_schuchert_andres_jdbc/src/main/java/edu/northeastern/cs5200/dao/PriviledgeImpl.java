@@ -4,6 +4,7 @@ import edu.northeastern.cs5200.Connection;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 
 public class PriviledgeImpl implements PriviledgeDao {
 
@@ -39,7 +40,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(2,websiteId);
 			statement.setString(3,priviledge);
 			statement.executeUpdate();
-			Connection.closeConnection();
+			//Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -57,7 +58,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(2,pageId);
 			statement.setString(3,priviledge);
 			statement.executeUpdate();
-			Connection.closeConnection();
+			//Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -74,7 +75,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(2,websiteId);
 			statement.setString(3,priviledge);
 			statement.executeUpdate();
-			Connection.closeConnection();
+			//Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){
@@ -91,7 +92,7 @@ public class PriviledgeImpl implements PriviledgeDao {
 			statement.setInt(2,pageId);
 			statement.setString(3,priviledge);
 			statement.executeUpdate();
-			Connection.closeConnection();
+			//Connection.closeConnection();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e){

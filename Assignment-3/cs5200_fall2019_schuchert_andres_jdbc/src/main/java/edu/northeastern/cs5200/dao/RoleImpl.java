@@ -19,7 +19,7 @@ public class RoleImpl implements RoleDao {
 			"WHERE website_role.website_id = ? AND website_role.developer_id = ?";
 
 	private static final String DELETE_PAGE_ROLE = "DELETE FROM page_role " +
-			"WHERE page_role.website_id = ? AND page_role.page_id = ?";
+			"WHERE page_role.developer_id = ? AND page_role.page_id = ?";
 
 	private static RoleImpl instance = null;
 
@@ -34,42 +34,48 @@ public class RoleImpl implements RoleDao {
 	public void assignWebsiteRole(int developerId, int websiteId, int roleId) {
 		// TODO Auto-generated method stub
 		try{
-			java.sql.Connection conn = Connection.getConnection();
-			PreparedStatement statement = conn.prepareStatement(ASSIGN_WEBSITE_ROLE);
-			statement.setInt(1,developerId);
-			statement.setInt(2,websiteId);
 			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
+			//java.sql.Connection conn = Connection.getConnection();
+//			PreparedStatement statement = conn.prepareStatement(ASSIGN_WEBSITE_ROLE);
+//			statement.setInt(1,developerId);
+//			statement.setInt(2,websiteId);
+			String role = "";
 			switch (roleId){
 				case 1:
-					statement.setString(3, Role.OWNER.name());
+					role = Role.OWNER.name();
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.CREATE.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.UPDATE.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.DELETE.name());
 					break;
 				case 2:
-					statement.setString(3, Role.ADMIN.name());
+					role =  Role.ADMIN.name();
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.CREATE.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.UPDATE.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.DELETE.name());
 					break;
 				case 3:
-					statement.setString(3, Role.WRITER.name());
+					role = Role.WRITER.name();
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.CREATE.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.UPDATE.name());
 					break;
 				case 4:
-					statement.setString(3, Role.EDITOR.name());
+					role = Role.EDITOR.name();
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.UPDATE.name());
 					break;
 				case 5:
-					statement.setString(3,Role.REVIEWER.name());
+					role = Role.REVIEWER.name();
 					priviledgeDao.assignWebsitePriviledge(developerId,websiteId, Priviledge.READ.name());
 					break;
 			}
+			java.sql.Connection conn = Connection.getConnection();
+			PreparedStatement statement = conn.prepareStatement(ASSIGN_WEBSITE_ROLE);
+			statement.setInt(1,developerId);
+			statement.setInt(2,websiteId);
+			statement.setString(3,role);
 			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e){
@@ -83,11 +89,11 @@ public class RoleImpl implements RoleDao {
 	public void assignPageRole(int developerId, int pageId, int roleId) {
 		// TODO Auto-generated method stub
 		try{
+			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(ASSIGN_PAGE_ROLE);
 			statement.setInt(1,developerId);
 			statement.setInt(2,pageId);
-			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			switch (roleId){
 				case 1:
 					statement.setString(3, Role.OWNER.name());
@@ -133,11 +139,11 @@ public class RoleImpl implements RoleDao {
 		// TODO Auto-generated method stub
 		int res = -1;
 		try{
+			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(DELETE_WEBSITE_ROLE);
 			statement.setInt(1,developerId);
 			statement.setInt(2,websiteId);
-			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			switch (roleId){
 				case 1:
 					priviledgeDao.deleteWebsitePriviledge(developerId,websiteId,Priviledge.CREATE.name());
@@ -180,11 +186,11 @@ public class RoleImpl implements RoleDao {
 		// TODO Auto-generated method stub
 		int res = -1;
 		try{
+			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(DELETE_PAGE_ROLE);
 			statement.setInt(1,developerId);
 			statement.setInt(2,pageId);
-			PriviledgeImpl priviledgeDao = PriviledgeImpl.getInstance();
 			switch (roleId){
 				case 1:
 					priviledgeDao.deletePagePriviledge(developerId,pageId,Priviledge.CREATE.name());

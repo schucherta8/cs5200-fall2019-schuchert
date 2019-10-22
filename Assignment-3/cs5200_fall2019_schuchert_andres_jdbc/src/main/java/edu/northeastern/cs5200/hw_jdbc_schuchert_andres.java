@@ -1,16 +1,25 @@
 package edu.northeastern.cs5200;
 
+import java.util.Collection;
+
 import edu.northeastern.cs5200.dao.*;
 import edu.northeastern.cs5200.model.*;
 
 public class hw_jdbc_schuchert_andres {
     public static void main(String[] args){
+        /******************************************************************************************
+         *                                  INSERTS LOCATED HERE                                  *
+         *****************************************************************************************/
         //Create Users and Developers
         DeveloperImpl devdao = DeveloperImpl.getInstance();
         Developer alice = new Developer("4321rewq",12,"Alice",
                 "Wonder","alice","alice","alice@wonder.com",
                 new java.sql.Date(2000,1,1));
         devdao.createDeveloper(alice);
+        Address alicePrimary = new Address(alice.getId(),"123 Adam St.",null,
+                "Alton",null,"01234",true);
+        AddressImpl addressDao = AddressImpl.getInstance();
+        addressDao.createAddress(alicePrimary);
         Developer bob = new Developer("5432trew",23,"Bob",
                 "Marley","bob","bob","bob@marley.com",
                 new java.sql.Date(1990,1,1));
@@ -19,6 +28,9 @@ public class hw_jdbc_schuchert_andres {
                 "Garcia","charlie","charlie","chuch@garcia.com",
                 new java.sql.Date(1980,1,1));
         devdao.createDeveloper(charlie);
+        Phone charliePrimary = new Phone(charlie.getId(),"321-432-5435",true);
+        PhoneImpl phoneDao = PhoneImpl.getInstance();
+        phoneDao.createPhone(charliePrimary);
         UserImpl userdao = UserImpl.getInstance();
         User dan = new User(45,"Dan", "Martin","dan","dan","dan@martin.com",
                 new java.sql.Date(2012,1,1));
@@ -55,35 +67,35 @@ public class hw_jdbc_schuchert_andres {
                 new java.sql.Date(2019,10,20),
                 new java.sql.Date(2019,10,20),4322345);
 
+        websiteDao.createWebsiteForDeveloper(alice.getId(),facebook);
+        websiteDao.createWebsiteForDeveloper(alice.getId(),cnn);
+        websiteDao.createWebsiteForDeveloper(bob.getId(),twitter);
+        websiteDao.createWebsiteForDeveloper(bob.getId(),cnet);
+        websiteDao.createWebsiteForDeveloper(charlie.getId(),wikipedia);
+        websiteDao.createWebsiteForDeveloper(charlie.getId(), gizmodo);
         /*
             Assign website roles to Developers
          */
         RoleImpl roleDao = RoleImpl.getInstance();
         //Alice Roles
         roleDao.assignWebsiteRole(alice.getId(),facebook.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(alice.getId(),facebook);
         roleDao.assignWebsiteRole(alice.getId(),twitter.getId(),Role.EDITOR.getId());
         roleDao.assignWebsiteRole(alice.getId(),wikipedia.getId(),Role.ADMIN.getId());
         roleDao.assignWebsiteRole(alice.getId(),cnn.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(alice.getId(),cnn);
         roleDao.assignWebsiteRole(alice.getId(),cnet.getId(),Role.ADMIN.getId());
         roleDao.assignWebsiteRole(alice.getId(),gizmodo.getId(),Role.EDITOR.getId());
         //Bob roles
         roleDao.assignWebsiteRole(bob.getId(),facebook.getId(),Role.EDITOR.getId());
         roleDao.assignWebsiteRole(bob.getId(),twitter.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(bob.getId(),twitter);
         roleDao.assignWebsiteRole(bob.getId(),wikipedia.getId(),Role.ADMIN.getId());
         roleDao.assignWebsiteRole(bob.getId(),cnn.getId(),Role.EDITOR.getId());
         roleDao.assignWebsiteRole(bob.getId(),cnet.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(bob.getId(),cnet);
         roleDao.assignWebsiteRole(bob.getId(),gizmodo.getId(),Role.ADMIN.getId());
-        //Charlie roles
+        //Charlie roles - Issues with Charlie
         roleDao.assignWebsiteRole(charlie.getId(),facebook.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(charlie.getId(),facebook);
         roleDao.assignWebsiteRole(charlie.getId(),twitter.getId(),Role.EDITOR.getId());
         roleDao.assignWebsiteRole(charlie.getId(),wikipedia.getId(),Role.ADMIN.getId());
         roleDao.assignWebsiteRole(charlie.getId(),cnn.getId(),Role.OWNER.getId());
-        websiteDao.createWebsiteForDeveloper(charlie.getId(),cnn);
         roleDao.assignWebsiteRole(charlie.getId(),cnet.getId(),Role.ADMIN.getId());
         roleDao.assignWebsiteRole(charlie.getId(),gizmodo.getId(),Role.EDITOR.getId());
 
@@ -155,7 +167,62 @@ public class hw_jdbc_schuchert_andres {
         widgetDao.createWidgetForPage(contact.getId(),image345);
         Widget video456 = new YouTubeWidget(678,"video456",400,300,
                 null,null,null,0,"https://youtu.be/h67VX51QXiQ",
-                false,false);
+                null,null);
         widgetDao.createWidgetForPage(preferences.getId(),video456);
+        System.out.println("End of Inserts");
+
+        /******************************************************************************************
+         *                                  UPDATES LOCATED HERE                                  *
+         *****************************************************************************************/
+        //Update 1
+        Phone charliePrimaryUpdate = new Phone("333-444-5555",true);
+        phoneDao.updatePhonePrimary(charlie.getId(),charliePrimaryUpdate);
+        //Update 2
+
+        //Update 3
+        Collection<Page> pages = pageDao.findPagesForWebsite(cnet.getId());
+        for(Page p : pages){
+            Page updatePage = new Page(p.getId(),"CNET - " + p.getTitle(),p.getDescription(),
+                    p.getCreated(),p.getUpdated(),p.getViews());
+            pageDao.updatePage(p.getId(),updatePage);
+        }
+        //Update 4
+        Collection<Page> cnetPages = pageDao.findPagesForWebsite(cnet.getId());
+        Page cnetHomePage = null;
+        for(Page p : cnetPages){
+            if(p.getId() == home.getId()){
+                cnetHomePage = p;
+                break;
+            }
+        }
+        roleDao.deletePageRole(charlie.getId(), cnetHomePage.getId(),Role.WRITER.getId());
+        roleDao.deletePageRole(bob.getId(), cnetHomePage.getId(),Role.REVIEWER.getId());
+        roleDao.assignPageRole(charlie.getId(),cnetHomePage.getId(), Role.REVIEWER.getId());
+        roleDao.assignPageRole(bob.getId(),cnetHomePage.getId(),Role.WRITER.getId());
+        System.out.println("End of Updates");
+
+        /******************************************************************************************
+         *                                  DELETES LOCATED HERE                                  *
+         *****************************************************************************************/
+        //Delete 1
+        addressDao.deleteAddressPrimary(alice.getId());
+
+        //Delete 2
+        Collection<Widget> widgets = widgetDao.findWidgetsForPage(contact.getId());
+        Widget maxWidget = null;
+        Widget widget;
+        int max = 0;
+        while(widgets.iterator().hasNext()){
+            widget = widgets.iterator().next();
+            if(widget.getOrder() > max){
+                maxWidget = widget;
+                max = maxWidget.getOrder();
+            }
+        }
+        widgetDao.deleteWidget(maxWidget.getId());
+        //Delete 3
+
+        //Delete 4
+        websiteDao.deleteWebsite(cnet.getId());
     }
 }

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -47,7 +48,7 @@ public class WebsiteImpl implements WebsiteDao {
 			statement.setString(4, website.getDescription());
 			statement.setDate(5,website.getCreated());
 			statement.setDate(6, website.getUpdated());
-			statement.setInt(7, website.getVisits());
+			statement.setObject(7, website.getVisits(), Types.INTEGER);
 			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch(SQLException e) {
@@ -157,7 +158,7 @@ public class WebsiteImpl implements WebsiteDao {
 			statement.setString(2,website.getDescription());
 			statement.setDate(3,website.getCreated());
 			statement.setDate(4,website.getUpdated());
-			statement.setInt(5,website.getVisits());
+			statement.setObject(5,website.getVisits(), Types.INTEGER);
 			statement.setInt(6,websiteId);
 			statement.executeUpdate();
 			Connection.closeConnection();

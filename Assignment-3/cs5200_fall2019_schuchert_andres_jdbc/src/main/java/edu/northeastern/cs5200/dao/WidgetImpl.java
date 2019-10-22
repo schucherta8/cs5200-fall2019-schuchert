@@ -25,7 +25,7 @@ public class WidgetImpl implements WidgetDao {
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String CREATE_YOUTUBE_WIDGET = "INSERT INTO widget_generalization "
 			+ "(widget_id, `name`, d_type, `text`, `order`, width, height, css_class, css_style, page_id, "
-			+ "youtube_url, youtube_shareable, youtube_expandable) "
+			+ "youtube_url, youtube_sharable, youtube_expandable) "
 			+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	
 	private static final String FIND_ALL_WIDGETS = "SELECT * FROM widget_generalization";
@@ -142,8 +142,10 @@ public class WidgetImpl implements WidgetDao {
 					statement.setString(9, widget.getCssStyle());
 					statement.setInt(10	, pageId);
 					statement.setString(11, ((YouTubeWidget)widget).getUrl());
-					statement.setBoolean(11, ((YouTubeWidget)widget).isSharable());
-					statement.setBoolean(11, ((YouTubeWidget)widget).isExpandable());
+					statement.setObject(12, ((YouTubeWidget)widget).isSharable(),
+									Types.BOOLEAN);
+					statement.setObject(13, ((YouTubeWidget)widget).isExpandable(),
+									Types.BOOLEAN);
 					page.insertWidget(widget);
 					statement.executeUpdate();
 				}
@@ -395,8 +397,10 @@ public class WidgetImpl implements WidgetDao {
 						statement.setString(7, widget.getCssClass());
 						statement.setString(8, widget.getCssStyle());
 						statement.setString(9, ((YouTubeWidget)widget).getUrl());
-						statement.setBoolean(10, ((YouTubeWidget)widget).isSharable());
-						statement.setBoolean(11, ((YouTubeWidget)widget).isExpandable());
+						statement.setObject(10, ((YouTubeWidget)widget).isSharable(),
+										Types.BOOLEAN);
+						statement.setObject(11, ((YouTubeWidget)widget).isExpandable(),
+										Types.BOOLEAN);
 						statement.setInt(12,widgetId);
 						statement.executeUpdate();
 						res = 0;

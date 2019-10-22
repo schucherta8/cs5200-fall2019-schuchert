@@ -4,8 +4,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 
 import edu.northeastern.cs5200.Connection;
 import edu.northeastern.cs5200.model.Page;
@@ -49,7 +51,7 @@ public class PageImpl implements PageDao {
 			statement.setString(4, page.getDescription());
 			statement.setDate(5, page.getCreated());
 			statement.setDate(6, page.getUpdated());
-			statement.setInt(7,page.getViews());
+			statement.setObject(7,page.getViews(), Types.INTEGER);
 			statement.executeUpdate();
 			Connection.closeConnection();
 		} catch (SQLException e) {
@@ -120,7 +122,7 @@ public class PageImpl implements PageDao {
 	@Override
 	public Collection<Page> findPagesForWebsite(int websiteId) {
 		// TODO Auto-generated method stub
-		Collection<Page> pages = new ArrayList<Page>();
+		Collection<Page> pages = new LinkedList<>();
 		try {
 			java.sql.Connection conn = Connection.getConnection();
 			PreparedStatement statement = conn.prepareStatement(FIND_ALL_PAGES_FOR_WEBSITE);
@@ -158,7 +160,7 @@ public class PageImpl implements PageDao {
 			statement.setString(2,page.getDescription());
 			statement.setDate(3,page.getCreated());
 			statement.setDate(4,page.getUpdated());
-			statement.setInt(5,page.getViews());
+			statement.setObject(5,page.getViews(),Types.INTEGER);
 			statement.setInt(6,pageId);
 			statement.executeUpdate();
 			res = 0;
