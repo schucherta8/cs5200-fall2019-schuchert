@@ -1,5 +1,6 @@
 package edu.northeastern.cs5200;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -43,30 +44,30 @@ public class hw_jdbc_schuchert_andres {
         WebsiteImpl websiteDao = WebsiteImpl.getInstance();
         Website facebook = new Website(123,"Facebook",
                 "an online social media and social networking service",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),1234234);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),//Check this
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),1234234);
         Website twitter = new Website(234,"Twitter",
                 "an online news and social networking service",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),4321543);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),4321543);
         Website wikipedia = new Website(345,"Wikipedia",
                 "a free online encyclopedia",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),3456654);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),3456654);
         Website cnn = new Website(456,"CNN",
                 "an American basic cable and satellite television news channel",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),6543345);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),6543345);
         Website cnet = new Website(567,"CNET",
                 "an American media website that publishes reviews, news, articles, blogs," +
                         " podcasts and videos on technology and consumer electronics",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),5433455);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),5433455);
         Website gizmodo = new Website(678,"Gizmodo",
                 "a design, technology, science and science fiction website that also writes" +
                         " articles on politics",
-                new java.sql.Date(2019,10,20),
-                new java.sql.Date(2019,10,20),4322345);
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),
+                new java.sql.Date(Calendar.getInstance().getTime().getTime()),4322345);
 
         websiteDao.createWebsiteForDeveloper(alice.getId(),facebook);
         websiteDao.createWebsiteForDeveloper(alice.getId(),cnn);
@@ -221,7 +222,19 @@ public class hw_jdbc_schuchert_andres {
         }
         widgetDao.deleteWidget(maxWidget.getId());
         //Delete 3
-
+        Collection<Page> wikipediaPages = pageDao.findPagesForWebsite(wikipedia.getId());
+        if(!wikipediaPages.isEmpty()){
+            //Set page pointer to first page in collection
+            Page lastUpdated = wikipediaPages.iterator().next();
+            //Search pages for the last updated page
+            for(Page p : wikipediaPages){
+                if(p.getUpdated().compareTo(lastUpdated.getUpdated()) > 0){
+                    lastUpdated = p;
+                }
+            }
+            //Remove page
+            pageDao.deletePage(lastUpdated.getId());
+        }
         //Delete 4
         websiteDao.deleteWebsite(cnet.getId());
         System.out.println("End of Deletes");
