@@ -226,20 +226,23 @@ public class Cs5200Fall2019SchuchertApplicationTests {
 	}
 	@Test
 	public void testNumberOfSeatsInSection4321() {
-		List<Section> sections = universityDao.findAllSections();
-		
+		int res = sec4321.getSeats();
+		assertEquals(49,res);
 	}
 	@Test
 	public void testNumberOfSeatsInSection5432() {
-		
+		int res = sec5432.getSeats();
+		assertEquals(48,res);
 	}
 	@Test
 	public void testNumberOfSeatsInSection6543() {
-		
+		int res = sec6543.getSeats();
+		assertEquals(49,res);
 	}
 	@Test
 	public void testNumberOfSeatsInSection7654() {
-		
+		int res = sec7654.getSeats();
+		assertEquals(50,res);
 	}
 }
 
