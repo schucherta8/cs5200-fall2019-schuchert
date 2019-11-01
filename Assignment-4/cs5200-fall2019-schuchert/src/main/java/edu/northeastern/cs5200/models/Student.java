@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -26,25 +23,14 @@ public class Student extends User {
 	@OneToMany(mappedBy="student")
 	private List<Answer> answers;
 	
-	@ManyToMany
-	@JoinTable(name="ENROLLMENT",
-	joinColumns=@JoinColumn(name="STUDENT_ID",
-	referencedColumnName="ID"),
-	inverseJoinColumns=@JoinColumn(name="SECTION_ID",
-	referencedColumnName="ID"))
-	private List<Section> enrolledSections;
+	@OneToMany(mappedBy="student")//Working on this
+	private List<Enrollment> enrollees;
 	
 	public List<Answer> getAnswers() {
 		return answers;
 	}
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
-	}
-	public List<Section> getEnrolledSections() {
-		return enrolledSections;
-	}
-	public void setEnrolledSections(List<Section> enrolledSections) {
-		this.enrolledSections = enrolledSections;
 	}
 	public Integer getGradYear() {
 		return gradYear;
@@ -57,6 +43,14 @@ public class Student extends User {
 	}
 	public void setScholarship(Long scholarship) {
 		this.scholarship = scholarship;
+	}
+
+	public List<Enrollment> getEnrollees() {
+		return enrollees;
+	}
+
+	public void setEnrollees(List<Enrollment> enrollees) {
+		this.enrollees = enrollees;
 	}
 	
 }

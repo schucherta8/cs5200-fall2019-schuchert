@@ -75,6 +75,10 @@ public class Cs5200Fall2019SchuchertApplicationTests {
 			universityDao.addSectionToCourse(sec5432, cs1234);
 			universityDao.addSectionToCourse(sec6543, cs2345);
 			universityDao.addSectionToCourse(sec7654, cs3456);
+			universityDao.enrollStudentInSection(alice, sec4321);
+			universityDao.enrollStudentInSection(alice, sec5432);
+			universityDao.enrollStudentInSection(bob, sec5432);
+			universityDao.enrollStudentInSection(charlie, sec6543);
 			setUpComplete = true;
 		}
 	}
@@ -112,19 +116,130 @@ public class Cs5200Fall2019SchuchertApplicationTests {
 		int res = sections.size();
 		assertEquals(4,res);
 	}
-	@Test//Do this for all authors
-	public void testFindCoursesForAuthor() {
+	@Test
+	public void testFindCoursesForAuthorAlan() {
 		List<Course> alanCourses = universityDao.findCoursesForAuthor(alan);
 		int res = alanCourses.size();
 		assertEquals(2,res);
 	}
 	
-	@Test//Do this for all courses
-	public void testFindSectionsForCourse() {
+	@Test
+	public void testFindCoursesForAuthorAda() {
+		List<Course> adaCourses = universityDao.findCoursesForAuthor(ada);
+		int res = adaCourses.size();
+		assertEquals(2,res);
+	}
+	
+	@Test
+	public void testFindSectionsForCourseCS1234() {
 		List<Section> cs1234Sections = universityDao.findSectionForCourse(cs1234);
 		int res = cs1234Sections.size();
 		assertEquals(2,res);
 	}
 	
+	@Test
+	public void testFindSectionsForCourseCS2345() {
+		List<Section> cs2345Sections = universityDao.findSectionForCourse(cs2345);
+		int res = cs2345Sections.size();
+		assertEquals(1,res);
+	}
+	
+	@Test
+	public void testFindSectionsForCourseCS3456() {
+		List<Section> cs3456Sections = universityDao.findSectionForCourse(cs3456);
+		int res = cs3456Sections.size();
+		assertEquals(1,res);
+	}
+	
+	@Test
+	public void testFindSectionsForCourseCS4567() {
+		List<Section> cs4567Sections = universityDao.findSectionForCourse(cs4567);
+		int res = cs4567Sections.size();
+		assertEquals(0,res);
+	}
+	
+	@Test
+	public void testNumberOfStudentsInSection4321() {
+		List<Student> studentsInSec4321 = universityDao.findStudentsInSection(sec4321);
+		int res = studentsInSec4321.size();
+		assertEquals(1,res);
+	}
+	@Test
+	public void testNumberOfStudentsInSection5432() {
+		List<Student> studentsInSec5432 = universityDao.findStudentsInSection(sec5432);
+		int res = studentsInSec5432.size();
+		assertEquals(2,res);
+	}
+	@Test
+	public void testNumberOfStudentsInSection6543() {
+		List<Student> studentsInSec6543 = universityDao.findStudentsInSection(sec6543);
+		int res = studentsInSec6543.size();
+		assertEquals(1,res);
+	}
+	@Test
+	public void testNumberOfStudentsInSection7654() {
+		List<Student> studentsInSec7654 = universityDao.findStudentsInSection(sec7654);
+		int res = studentsInSec7654.size();
+		assertEquals(0,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentAlice() {
+		List<Section> sectionsForAlice = universityDao.findSectionForStudents(alice);
+		int res = sectionsForAlice.size();
+		assertEquals(2,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentBob() {
+		List<Section> sectionsForBob = universityDao.findSectionForStudents(bob);
+		int res = sectionsForBob.size();
+		assertEquals(1,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentCharlie() {
+		List<Section> sectionsForCharlie = universityDao.findSectionForStudents(charlie);
+		int res = sectionsForCharlie.size();
+		assertEquals(1,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentDan() {
+		List<Section> sectionsForDan = universityDao.findSectionForStudents(dan);
+		int res = sectionsForDan.size();
+		assertEquals(0,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentEdward() {
+		List<Section> sectionsForEdward = universityDao.findSectionForStudents(edward);
+		int res = sectionsForEdward.size();
+		assertEquals(0,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentFrank() {
+		List<Section> sectionsForFrank = universityDao.findSectionForStudents(frank);
+		int res = sectionsForFrank.size();
+		assertEquals(0,res);
+	}
+	@Test
+	public void testNumberOfSectionsForStudentGregory() {
+		List<Section> sectionsForGregory = universityDao.findSectionForStudents(gregory);
+		int res = sectionsForGregory.size();
+		assertEquals(0,res);
+	}
+	@Test
+	public void testNumberOfSeatsInSection4321() {
+		List<Section> sections = universityDao.findAllSections();
+		
+	}
+	@Test
+	public void testNumberOfSeatsInSection5432() {
+		
+	}
+	@Test
+	public void testNumberOfSeatsInSection6543() {
+		
+	}
+	@Test
+	public void testNumberOfSeatsInSection7654() {
+		
+	}
 }
 

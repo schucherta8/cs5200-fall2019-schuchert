@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.northeastern.cs5200.models.Course;
+import edu.northeastern.cs5200.models.Enrollment;
 import edu.northeastern.cs5200.models.Faculty;
 import edu.northeastern.cs5200.models.Section;
 import edu.northeastern.cs5200.models.Student;
 import edu.northeastern.cs5200.models.User;
 import edu.northeastern.cs5200.repositories.CourseRepository;
+import edu.northeastern.cs5200.repositories.EnrollmentRepository;
 import edu.northeastern.cs5200.repositories.FacultyRepository;
 import edu.northeastern.cs5200.repositories.SectionRepository;
 import edu.northeastern.cs5200.repositories.StudentRepository;
@@ -36,6 +38,9 @@ public class UniversityImpl implements UniversityDao {
 	
 	@Autowired
 	SectionRepository sectionRepository;
+	
+	@Autowired
+	EnrollmentRepository enrollmentRepository;
 	
 	@Override
 	public void truncateDatabase() {
@@ -88,7 +93,15 @@ public class UniversityImpl implements UniversityDao {
 	@Override
 	public Boolean enrollStudentInSection(Student student, Section section) {
 		// TODO Auto-generated method stub
-		return null;
+		if(section.getSeats() > 0) {
+			Enrollment enrollee = new Enrollment(student,section);
+			enrollmentRepository.save(enrollee);
+			int seatsUpdate = section.getSeats() - 1;
+			section.setSeats(seatsUpdate);
+			sectionRepository.save(section);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -150,13 +163,27 @@ public class UniversityImpl implements UniversityDao {
 	@Override
 	public List<Student> findStudentsInSection(Section section) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Student> studentsInSection = new ArrayList<>();
+		List<Enrollment> enrollees = (List<Enrollment>) enrollmentRepository.findAll();
+		for(Enrollment enrollee : enrollees) {
+			if(enrollee.getSection().getId() == section.getId()) {
+				studentsInSection.add(enrollee.getStudent());
+			}
+		}
+		return studentsInSection;
 	}
 
 	@Override
 	public List<Section> findSectionForStudents(Student student) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Section> sectionsForStudent = new ArrayList<>();
+		List<Enrollment> enrollees = (List<Enrollment>) enrollmentRepository.findAll();
+		for(Enrollment enrollee : enrollees) {
+			if(enrollee.getStudent().getId() == student.getId()) {
+				sectionsForStudent.add(enrollee.getSection());
+			}
+		}
+		return sectionsForStudent;
 	}
 
 }

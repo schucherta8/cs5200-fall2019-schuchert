@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,8 +29,8 @@ public class Section {
 	@JsonIgnore
 	private Course course;
 	
-	@ManyToMany(mappedBy="enrolledSections")
-	private List<Student> enrolledStudents;
+	@OneToMany(mappedBy = "section")
+	private List<Enrollment> enrollees;
 	
 	public Section() {}
 	
@@ -59,13 +59,6 @@ public class Section {
 	public void setSeats(Integer seats) {
 		this.seats = seats;
 	}
-	//Is the following below correct?
-	public List<Student> getEnrolledStudents() {
-		return enrolledStudents;
-	}
-	public void setEnrolledStudents(List<Student> enrolledStudents) {
-		this.enrolledStudents = enrolledStudents;
-	}
 	public Faculty getTeacher() {
 		return teacher;
 	}
@@ -77,6 +70,14 @@ public class Section {
 	}
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+
+	public List<Enrollment> getEnrollees() {
+		return enrollees;
+	}
+
+	public void setEnrollees(List<Enrollment> enrollees) {
+		this.enrollees = enrollees;
 	}
 	
 }
