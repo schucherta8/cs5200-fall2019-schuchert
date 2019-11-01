@@ -22,7 +22,6 @@ import edu.northeastern.cs5200.repositories.UserRepository;
 @Repository
 public class UniversityImpl implements UniversityDao {
 	
-	//Refer to addSectionToCourse note
 	
 	@Autowired
 	FacultyRepository facultyRepository;
@@ -48,6 +47,7 @@ public class UniversityImpl implements UniversityDao {
 		userRepository.deleteAll();
 		courseRepository.deleteAll();
 		sectionRepository.deleteAll();
+		enrollmentRepository.deleteAll();
 	}
 
 	@Override
