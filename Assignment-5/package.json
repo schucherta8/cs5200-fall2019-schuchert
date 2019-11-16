@@ -1,0 +1,20 @@
+{
+  "name": "assignment-5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "author": "Andres Schuchert",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^5.7.8"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
