@@ -4,6 +4,10 @@ const mongoose = require('mongoose');//Load modules
 // requirements and default values.
 const studentSchema = mongoose.Schema({
     _id: Number,
+    firstName: String,
+    lastName: String,
+    username: String,
+    password: String,
     gradYear: Number,
     scholarship: Number
 },{collection: 'students'});

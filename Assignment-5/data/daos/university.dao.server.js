@@ -9,8 +9,10 @@ truncateDatabase = () => Promise.all([
 ]);
 populateDatabase = () => Promise.all(
     [
-    createStudent({_id: 123, gradYear: 2020, scholarship: 15000}),
-    createStudent({_id: 234, gradYear: 2021, scholarship: 12000}),
+    createStudent({_id: 123, firstName: 'Alice', lastName: 'Wonderland', username: 'alice',
+        password: 'alice', gradYear: 2020, scholarship: 15000}),
+    createStudent({_id: 234, firstName: 'Bob', lastName: 'Hope', username: 'bob',
+        password: 'bob', gradYear: 2021, scholarship: 12000}),
     createQuestion({_id: 321, question: 'Is the following schema valid?', points: 10,
     questionType: 'TRUE_FALSE', trueFalse: {isTrue: false}}),
     createQuestion({_id: 432, question: 'DAO stands for Dynamic Access Object.', points: 10,

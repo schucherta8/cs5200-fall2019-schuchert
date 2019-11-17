@@ -70,10 +70,4 @@ afterAll(() => {
    return universityDao.truncateDatabase();
 });
 
-// universityDao.truncateDatabase()
-//     .then(universityDao.populateDatabase)
-//     .then(universityDao.findAllStudents)
-//     .then(console.log)
-//     .catch(console.error);
-
 //close connections
