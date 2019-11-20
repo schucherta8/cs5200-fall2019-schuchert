@@ -3,7 +3,9 @@ require('./data/db.js')();
 const universityDao = require('./data/daos/university.dao.server');
 
 beforeAll(() => {
-    return universityDao.populateDatabase();
+    return universityDao.truncateDatabase().then(() => {
+        return universityDao.populateDatabase();
+    });
 });
 
 test('testStudentsInitialCount',() => {
@@ -11,7 +13,8 @@ test('testStudentsInitialCount',() => {
         .countDocuments()
         .then(data => {
             expect(data).toBe(2);
-        });
+        })
+        .catch(err => console.log(err));
 });
 
 test('testQuestionsInitialCount', () => {
@@ -19,7 +22,8 @@ test('testQuestionsInitialCount', () => {
        .countDocuments()
        .then(data => {
             expect(data).toBe(4);
-       });
+       })
+       .catch(err => console.log(err));
 });
 
 test('testAnswersInitialCount', () => {
@@ -27,7 +31,8 @@ test('testAnswersInitialCount', () => {
        .countDocuments()
        .then(data => {
            expect(data).toBe(8);
-       });
+       })
+       .catch(err => console.log(err));
 });
 
 test('testDeleteAnswer', () => {
@@ -35,22 +40,21 @@ test('testDeleteAnswer', () => {
         .then(() => {
             universityDao.findAllAnswers().countDocuments()
                 .then(output => {
-                    console.log('Total Answer(s): ' + output);
                     expect(output).toBe(7);
                 });
             universityDao.findAnswersByStudent(234).countDocuments()
                 .then(output => {
-                    console.log('Bob Answer(s): ' + output);
+
                     expect(output).toBe(3);
                 });
-        });
+        })
+        .catch(err => console.log(err));
 });
 
 test('testDeleteQuestion', () => {
     return universityDao.deleteQuestion(321)
         .then(() => universityDao.findAllQuestions().countDocuments())
         .then(output => {
-            console.log(output);
             expect(output).toBe(3);
         })
         .catch(err => console.log(err));
