@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.17</version><!--$NO-MVN-MAN-VER$-->
+			<version>8.0.28</version><!--$NO-MVN-MAN-VER$-->
 			<!-- change to 5.1.45 if errors persist -->
 		</dependency>
 		<dependency>
